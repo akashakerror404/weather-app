@@ -139,7 +139,7 @@ function Home() {
       <div className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#f2f5eb] w-96 rounded-md'>
         <div className=''>
           <div className='flex justify-center items-center'>
-            <h1 className='p-2 text-2xl font-sans'>Check Weather</h1>
+            <h1 className='p-2 text-2xl font-sans font-bold'>Check Weather</h1>
           </div>
           <div className='flex justify-center items-center relative'>
   <input
