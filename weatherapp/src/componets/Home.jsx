@@ -160,7 +160,6 @@ function Home() {
             setCitySuggestions([]);
           }}
         >
-          {suggest.name}
         </li>
       ))}
     </ul>
