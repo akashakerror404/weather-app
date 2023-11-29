@@ -6,12 +6,9 @@ import Sunrise from './Sunrise';
 import Rain from './Rain';
 import Snowfal from './Snowfal';
 import { CiSearch } from "react-icons/ci";
-import { FaCloudRain } from "react-icons/fa6";
-import { FaSnowman } from "react-icons/fa";
-import { FaCloudSun } from "react-icons/fa6";
-import { FaTemperatureHalf } from "react-icons/fa6";
+import { FaCloudRain, FaSnowman, FaCloudSun, FaTemperatureHalf } from "react-icons/fa6";
 import { IoWater } from "react-icons/io5";
-import {api} from '../componets/newapi'
+import { api } from '../componets/newapi';
 import axios from "axios";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -19,27 +16,13 @@ import Bg from './Bg';
 
 function Home() {
   const [city, setCity] = useState("");
-  const [citySuggestions, setCitySuggestions] = useState([]);
-  const [cityWeatherData, setCityWeatherData] = useState({});
   const [weatherData, setWeatherData] = useState({});
   const [currentTime, setCurrentTime] = useState(new Date());
   const [climate, setClimate] = useState(false);
   const [minusdegree, setMinusdegree] = useState(false);
 
-  const handleCityChange = async (e) => {
-    const cityName = e.target.value;
-    setCity(cityName);
-
-    try {
-      const response = await axios.get(
-        `https://api.openweathermap.org/data/2.5/find?q=${cityName}&type=like&sort=population&cnt=10&appid=${api}`
-      );
-
-      setCitySuggestions(response.data.list);
-      console.log(response.data.list)
-    } catch (error) {
-      console.error("Error fetching city suggestions:", error);
-    }
+  const handleCityChange = (e) => {
+    setCity(e.target.value);
   };
 
   const handleSubmit = async () => {
@@ -70,16 +53,11 @@ function Home() {
       });
 
       if (response.data.weather[0].description === "light rain") {
-        console.log(response.data.weather[0].description);
         setClimate(true);
-        console.log(climate, "climate");
       }
+
       if (temperatureInCelsius < 0) {
-        console.log(temperatureInCelsius);
         setMinusdegree(true);
-      } else {
-        // Code to be executed if neither of the conditions is true
-        // setclimate(false);
       }
     } catch (error) {
       toast.error('Please enter a valid city name');
@@ -92,6 +70,7 @@ function Home() {
     const intervalId = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
+
     const fetchCity = async () => {
       try {
         const response = await axios.get(
@@ -111,11 +90,11 @@ function Home() {
           description: response.data.weather[0].description,
           icon: response.data.weather[0].icon,
         });
-        const temperature = parseInt(response.data.main.temp, 10);
       } catch (error) {
         console.error("Error fetching weather data:", error);
       }
     };
+
     fetchCity();
 
     return () => clearInterval(intervalId);
@@ -123,7 +102,7 @@ function Home() {
 
   return (
     <div>
-            <ToastContainer
+      <ToastContainer
         position="top-center"
         autoClose={5000}
         hideProgressBar
@@ -142,33 +121,18 @@ function Home() {
             <h1 className='p-2 text-2xl font-sans font-bold'>Check Weather</h1>
           </div>
           <div className='flex justify-center items-center relative'>
-  <input
-    type="text"
-    placeholder="Enter location..."
-    className="p-2 mt-2 w-full"
-    value={city}
-    onChange={handleCityChange}
-  />
-  {citySuggestions.length > 0 && (
-    <ul className="absolute bg-white w-full border rounded-b-md border-gray-300 mt-2">
-      {citySuggestions.map((suggest) => (
-        <li
-          key={suggest.id}
-          className="p-2 cursor-pointer hover:bg-gray-100"
-          onClick={() => {
-            setCity(suggest.name);
-            setCitySuggestions([]);
-          }}
-        >
-        </li>
-      ))}
-    </ul>
-  )}
-  <button className="bg-blue-500 p-2.5 text-white mt-2" onClick={handleSubmit}>
-    <CiSearch size={20} />
-  </button>
-</div>
+            <input
+              type="text"
+              placeholder="Enter location..."
+              className="p-2 mt-2 w-full"
+              value={city}
+              onChange={handleCityChange}
+            />
 
+            <button className="bg-blue-500 p-2.5 text-white mt-2" onClick={handleSubmit}>
+              <CiSearch size={20} />
+            </button>
+          </div>
         </div>
 
         <div className="mt-4 p-2">
