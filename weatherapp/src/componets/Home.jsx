@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Input from './Input';
 import Sunrise from './Sunrise';
-import Rain from './rain';
+import Rain from './Rain';
 import Snowfal from './Snowfal';
 import { CiSearch } from "react-icons/ci";
 import { FaCloudRain } from "react-icons/fa6";
